@@ -12,27 +12,29 @@ st.markdown("""
     background-size: cover;
 }
 
-/* Remove top padding */
+/* FIX TOP SPACING */
 .block-container {
-    padding-top: 1rem;
+    padding-top: 4rem !important;
 }
 
-/* Title */
+/* TITLE BIG + DOWN */
 .title {
     text-align: center;
-    font-size: 36px;
+    font-size: 42px;
     color: black;
-    font-weight: 700;
+    font-weight: 800;
+    margin-top: 20px;
 }
 
-/* Subtitle */
+/* SUBTITLE */
 .subtitle {
     text-align: center;
+    font-size: 18px;
     color: #333;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
-/* TEXT AREA WHITE */
+/* TEXT AREA */
 textarea {
     background-color: white !important;
     color: black !important;
@@ -55,14 +57,14 @@ textarea {
     width: 200px;
     font-weight: 600;
     border: none;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 /* RESULT BIG */
 .result {
     text-align: center;
-    font-size: 26px;
-    margin-top: 30px;
+    font-size: 28px;
+    margin-top: 35px;
     font-weight: 700;
 }
 
