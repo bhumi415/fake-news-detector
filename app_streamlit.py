@@ -2,18 +2,9 @@ import streamlit as st
 
 st.set_page_config(page_title="Fake News Detector", layout="wide")
 
-# 🔥 REMOVE STREAMLIT DEFAULT PADDING
+# 🔥 CLEAN CSS (NO GLASS, PROPER CONTRAST)
 st.markdown("""
 <style>
-
-/* Remove top spacing */
-.block-container {
-    padding-top: 1rem !important;
-}
-
-/* Remove weird header gap */
-header {visibility: hidden;}
-footer {visibility: hidden;}
 
 /* Background */
 .stApp {
@@ -21,77 +12,71 @@ footer {visibility: hidden;}
     background-size: cover;
 }
 
-/* CENTER CONTAINER */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
+/* Remove top padding */
+.block-container {
+    padding-top: 1rem;
 }
 
-/* GLASS CARD */
-.main-box {
-    width: 600px;
-    background: rgba(15, 23, 42, 0.85);
-    padding: 35px;
-    border-radius: 18px;
-    backdrop-filter: blur(14px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-}
-
-/* TITLE */
+/* Title */
 .title {
     text-align: center;
-    font-size: 32px;
-    color: white;
+    font-size: 36px;
+    color: black;
     font-weight: 700;
 }
 
-/* SUBTITLE */
+/* Subtitle */
 .subtitle {
     text-align: center;
-    color: #cbd5f5;
+    color: #333;
     margin-bottom: 25px;
 }
 
-/* TEXT AREA */
+/* TEXT AREA WHITE */
 textarea {
-    background-color: rgba(0,0,0,0.9) !important;
-    color: white !important;
+    background-color: white !important;
+    color: black !important;
     border-radius: 12px !important;
+    border: 2px solid #ddd !important;
+    padding: 10px;
 }
 
-/* BUTTON */
+/* BUTTON CENTER */
+.stButton {
+    display: flex;
+    justify-content: center;
+}
+
 .stButton>button {
     background: linear-gradient(135deg, #22c55e, #16a34a);
     color: white;
     border-radius: 12px;
     height: 3em;
-    width: 100%;
+    width: 200px;
     font-weight: 600;
     border: none;
+    margin-top: 10px;
 }
 
-/* RESULT */
+/* RESULT BIG */
 .result {
     text-align: center;
-    font-size: 20px;
-    margin-top: 20px;
+    font-size: 26px;
+    margin-top: 30px;
+    font-weight: 700;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# CENTER WRAPPER
-st.markdown("<div class='container'>", unsafe_allow_html=True)
-
-st.markdown("<div class='main-box'>", unsafe_allow_html=True)
-
+# 🔥 TITLE
 st.markdown("<div class='title'>📰 Fake News Detector</div>", unsafe_allow_html=True)
 st.markdown("<div class='subtitle'>Analyze news and verify it instantly</div>", unsafe_allow_html=True)
 
+# INPUT
 text = st.text_area("")
 
+# BUTTON
 if st.button("Analyze News"):
     if text.strip() == "":
         st.warning("Enter some news!")
@@ -101,7 +86,4 @@ if st.button("Analyze News"):
         if any(word in text.lower() for word in fake_keywords):
             st.markdown("<div class='result' style='color:red;'>❌ Fake News</div>", unsafe_allow_html=True)
         else:
-            st.markdown("<div class='result' style='color:#22c55e;'>✅ Real News</div>", unsafe_allow_html=True)
-
-st.markdown("</div>", unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("<div class='result' style='color:green;'>✅ Real News</div>", unsafe_allow_html=True)
