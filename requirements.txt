@@ -1,6 +1,4 @@
-Flask
-flask-cors
-scikit-learn
+streamlit
+scikit-learn==1.3.0
 pandas
 numpy
-gunicorn
