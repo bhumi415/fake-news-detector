@@ -33,14 +33,14 @@ st.markdown("""
 .title {
     text-align: center;
     font-size: 32px;
-    color: white;
+    color: black;
     font-weight: 700;
 }
 
 /* SUBTITLE */
 .subtitle {
     text-align: center;
-    color: #cbd5f5;
+    color: black;
     margin-bottom: 25px;
 }
 
