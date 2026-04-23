@@ -2,49 +2,60 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pickle
 import re
-import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Load model
+# Load ML model
 model = pickle.load(open('model.pkl', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
 
-# Fake keywords
-fake_keywords = ["alien", "ghost", "invisible", "secret", "mystery", "rumor"]
+@app.route('/')
+def home():
+    return jsonify({"message": "Fake News Detection API Running"})
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        data = request.json
-        text = data.get('text', '')
+        data = request.get_json()
 
+        if not data or "text" not in data:
+            return jsonify({"error": "Invalid input"}), 400
+
+        text = data["text"]
+
+        # Validation
         if text.strip() == "":
             return jsonify({"error": "Empty input"}), 400
+
+        if len(text.split()) < 5:
+            return jsonify({"error": "Enter proper news sentence"}), 400
 
         # Clean text
         clean = re.sub(r'[^a-zA-Z]', ' ', text).lower()
 
+        # Vectorize
         vect = vectorizer.transform([clean])
 
-        # Prediction only (no probability)
-        result = model.predict(vect)[0]
+        # Prediction + Probability
+        pred = model.predict(vect)[0]
+        prob = model.predict_proba(vect)[0]
 
-        prediction = "Real News" if result == 1 else "Fake News"
-
-        # Keywords
-        found_words = [word for word in fake_keywords if word in clean]
+        if pred == 1:
+            result = "Real News"
+            confidence = prob[1]
+        else:
+            result = "Fake News"
+            confidence = prob[0]
 
         return jsonify({
-            "prediction": prediction,
-            "keywords": found_words
+            "prediction": result,
+            "confidence": round(confidence * 100, 2)
         })
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
-
-    
+    app.run(debug=True)
